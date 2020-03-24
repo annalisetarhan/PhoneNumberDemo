@@ -6,7 +6,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import com.example.phonenumberdemo.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,12 +25,12 @@ class MainActivity : AppCompatActivity() {
     private var prevEditText2CursorPosition: Int? = null
 
     private fun setUpPhoneEditTexts() {
-        phoneEditText1.addTextChangedListener(object : TextWatcher {
+        binding.phoneEditText1.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 if (userIsNotMakingChanges) {
                     return
                 }
-                if (phoneEditText1.text.length == 3) {
+                if (binding.phoneEditText1.text.length == 3) {
                     val lastDigit = chopOffLastDigit(1)
                     pushDigitToNextEditText(lastDigit, 2)
                     moveCursorIfNecessary(1)
@@ -47,21 +46,21 @@ class MainActivity : AppCompatActivity() {
                 if (p3 < p2 && !userIsNotMakingChanges) {
                     digitDeletedFlag = true
                 }
-                prevEditText1CursorPosition = phoneEditText1.selectionStart
+                prevEditText1CursorPosition = binding.phoneEditText1.selectionStart
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         })
 
-        phoneEditText2.addTextChangedListener(object : TextWatcher {
+        binding.phoneEditText2.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 if (userIsNotMakingChanges) {
                     return
                 }
-                if (phoneEditText2.selectionEnd == 0) {
+                if (binding.phoneEditText2.selectionEnd == 0) {
                     moveCursorBackTo(1)
                 }
-                if (phoneEditText2.text.length == 4) {
+                if (binding.phoneEditText2.text.length == 4) {
                     val lastDigit = chopOffLastDigit(2)
                     pushDigitToNextEditText(lastDigit, 3)
                     moveCursorIfNecessary(2)
@@ -77,21 +76,21 @@ class MainActivity : AppCompatActivity() {
                 if (p3 < p2 && !userIsNotMakingChanges) {
                     digitDeletedFlag = true
                 }
-                prevEditText2CursorPosition = phoneEditText2.selectionStart
+                prevEditText2CursorPosition = binding.phoneEditText2.selectionStart
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         })
 
-        phoneEditText3.addTextChangedListener(object : TextWatcher {
+        binding.phoneEditText3.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 if (userIsNotMakingChanges) {
                     return
                 }
-                if (phoneEditText3.selectionEnd == 0) {
+                if (binding.phoneEditText3.selectionEnd == 0) {
                     moveCursorBackTo(2)
                 }
-                if (phoneEditText3.text.length == 5) {
+                if (binding.phoneEditText3.text.length == 5) {
                     chopOffLastDigit(3)
                 }
             }
@@ -139,11 +138,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun moveCursorIfNecessary(editTextNum: Int) {
         if (editTextNum == 1 && prevEditText1CursorPosition!! > 1) {
-            phoneEditText2.requestFocus()
-            phoneEditText2.setSelection(prevEditText1CursorPosition!! - 2)
+            binding.phoneEditText2.requestFocus()
+            binding.phoneEditText2.setSelection(prevEditText1CursorPosition!! - 2)
         } else if (editTextNum == 2 && prevEditText2CursorPosition!! > 2) {
-            phoneEditText3.requestFocus()
-            phoneEditText3.setSelection(prevEditText2CursorPosition!! - 3)
+            binding.phoneEditText3.requestFocus()
+            binding.phoneEditText3.setSelection(prevEditText2CursorPosition!! - 3)
         }
     }
 
@@ -174,9 +173,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun getEditText(editTextNum: Int): EditText {
         return when (editTextNum) {
-            1 -> phoneEditText1
-            2 -> phoneEditText2
-            3 -> phoneEditText3
+            1 -> binding.phoneEditText1
+            2 -> binding.phoneEditText2
+            3 -> binding.phoneEditText3
             else -> error("invalid editTextNum")
         }
     }
@@ -201,8 +200,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun getNextEditText(editTextNum: Int): EditText? {
         return when (editTextNum) {
-            1 -> phoneEditText2
-            2 -> phoneEditText3
+            1 -> binding.phoneEditText2
+            2 -> binding.phoneEditText3
             3 -> null
             else -> error("invalid editTextNum")
         }
